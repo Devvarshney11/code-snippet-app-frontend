@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import SubmitForm from "./Pages/SubmitForm";
+import CodeSnippetTable from "./Pages/CodeSnippetTable";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [codeSnippets, setCodeSnippets] = useState([]);
+
+  const handleSubmit = (snippet) => {
+    setCodeSnippets([
+      ...codeSnippets,
+      { ...snippet, timestamp: new Date().toLocaleString() },
+    ]);
+    // Call API to submit snippet to backend here
+  };
+  const approuter = createBrowserRouter([
+    {
+      path: "/",
+      element: <SubmitForm onSubmit={handleSubmit} />,
+    },
+    {
+      path: "/table",
+      element: <CodeSnippetTable codeSnippets={codeSnippets} />,
+    },
+  ]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <RouterProvider router={approuter} />
     </div>
   );
-}
+};
 
 export default App;
