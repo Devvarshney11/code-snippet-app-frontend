@@ -18,12 +18,17 @@ const CodeSnippetTable = () => {
   }, []);
   const formatTime = (submissionTimestamp) => {
     const dateObject = new Date(submissionTimestamp);
-    const hours = dateObject.getUTCHours();
-    const minutes = dateObject.getUTCMinutes();
-    const seconds = dateObject.getUTCSeconds();
-    const formattedTime = `${hours}:${minutes}:${seconds}`;
+    const options = {
+      timeZone: "Asia/Kolkata",
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    const formattedTime = dateObject.toLocaleString("en-IN", options);
     return formattedTime;
   };
+
   return (
     <DefaultLayout>
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
